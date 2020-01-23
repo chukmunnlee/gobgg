@@ -1,0 +1,65 @@
+syntax = "proto3";
+
+package bgg;
+
+option go_package = "bggpb";
+
+/*
+{
+        "_id" : ObjectId("5d68b4d13cc1a2f130b1224d"),
+        "ID" : 174430,
+        "Name" : "Gloomhaven",
+        "Year" : 2017,
+        "Rank" : 1,
+        "Average" : 8.9,
+        "Bayes average" : 8.611,
+        "Users rated" : 24574,
+        "URL" : "/boardgame/174430/gloomhaven",
+        "Thumbnail" : "https://cf.geekdo-images.com/micro/img/8JYMPXdcBg_UHddwzq64H4NBduY=/fit-in/64x64/pic2437871.jpg"
+}
+*/
+
+enum Status {
+	NONE = 0;
+	OK = 1;
+	NOT_FOUND = 2;
+	ERROR = 3;
+}
+
+message Game {
+	uint64 id = 1;
+	string name = 2;
+	uint64 year = 3;
+	uint64 rank = 4;
+	double average = 5;
+	double bayes_average = 6;
+	uint64 users_rated = 7;
+	string url = 8;
+	string thumbnail = 9;
+}
+
+message GetGamesListRequest {
+	uint32 offset = 1;
+	uint32 limit = 2;
+}
+
+message GetGamesListResponse {
+	uint32 ordinal = 1;
+	uint32 total = 2;
+	Game game = 3;
+}
+
+message FindGameByIdRequest {
+	uint64 id = 1;
+}
+
+message FindGameByIdResponse {
+	uint64 id = 1;
+	Status status = 2;
+	Game game = 3;
+}
+
+service BoardgamesGeekService {
+	rpc GetGamesList(GetGamesListRequest) returns (stream GetGamesListResponse) {};
+	rpc FindGameById(FindGameByIdRequest) returns (FindGameByIdResponse) {};
+}

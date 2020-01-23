@@ -108,7 +108,7 @@ func (s *BggService) bggFindById(id uint64) (*Game, error) {
 }
 
 func (s *BggService) Connect() error {
-	log.Printf("Connecting to Mongo")
+	log.Printf("Connecting to Mongo...")
 
 	client, err := mongo.NewClient(options.Client().ApplyURI(s.MongoURL))
 	if nil != err {
@@ -120,6 +120,8 @@ func (s *BggService) Connect() error {
 	}
 	s.Client = client
 	s.Games = client.Database("bgg").Collection("games")
+
+	log.Println("connected")
 
 	return nil
 }

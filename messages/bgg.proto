@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package bgg;
 
+import "google/api/annotations.proto";
+
 option go_package = "bggpb";
 
 /*
@@ -61,5 +63,7 @@ message FindGameByIdResponse {
 
 service BoardgamesGeekService {
 	rpc GetGamesList(GetGamesListRequest) returns (stream GetGamesListResponse) {};
-	rpc FindGameById(FindGameByIdRequest) returns (FindGameByIdResponse) {};
+	rpc FindGameById(FindGameByIdRequest) returns (FindGameByIdResponse) {
+		option (google.api.http).get = "/api/v1/game/{id}";
+	};
 }

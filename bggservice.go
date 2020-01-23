@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"log"
 
-	pb "github.com/chukmunnlee/mgbgg/messages"
+	pb "github.com/chukmunnlee/gobgg/messages"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -70,7 +70,10 @@ func toProtobuf(g *Game) *pb.Game {
 
 // gRPC
 func (s *BggService) FindGameById(ctx context.Context, req *pb.FindGameByIdRequest) (*pb.FindGameByIdResponse, error) {
+
 	id := req.GetId()
+	log.Printf("FindGameById: %d\n", id)
+
 	game, err := s.bggFindById(id)
 	if nil != err {
 		return nil, status.Errorf(

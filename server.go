@@ -7,7 +7,7 @@ import (
 
 	"net"
 
-	pb "github.com/chukmunnlee/mgbgg/messages"
+	pb "github.com/chukmunnlee/gobgg/messages"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
